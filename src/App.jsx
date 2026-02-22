@@ -6,8 +6,11 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
 
+// Creamos una constante para la URL base
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+
   useEffect(() => {
-    fetch('http://localhost:3001/api/sites')
+    fetch(`${API_URL}/api/sites`) 
       .then(response => response.json())
       .then(data => {
         setSites(data);
@@ -17,7 +20,7 @@ function App() {
         console.error("Error al conectar con la API:", error);
         setLoading(false);
       });
-  }, []);
+  }, [API_URL]);
 
   // 1. Corregido: La lógica de filtrado ahora está fuera de otras funciones
   const filteredSites = sites.filter(site =>
